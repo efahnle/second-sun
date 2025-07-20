@@ -1,6 +1,6 @@
 import time
 from config import load_config
-from hardware import init_gpio
+from hardware import init_gpio, cleanup
 
 def main():
     config = load_config()
@@ -13,6 +13,7 @@ def main():
 
     light = init_gpio(config.get('gpio_pin', 16))
     print(light)
+    light.start(100)  
     while True:
         try:
             for i in range(100,-1,-1):
@@ -26,7 +27,7 @@ def main():
         except KeyboardInterrupt as e:
             light.ChangeDutyCycle(0)
             print("sali")
-            light.cleanup()
+            cleanup()
             raise e
 
 
