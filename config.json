@@ -2,6 +2,6 @@
     "latitude": -34.60368,
     "longitude": -58.38156,
     "api_url": "https://api.sunrisesunset.io/json",
-    "data_file": "./data_cache/sunrise_sunset.json",
+    "data_file_name": "data_cache/sunrise_sunset.json",
     "gpio_pin": 16
 }
