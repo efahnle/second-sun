@@ -24,18 +24,19 @@ def main():
     log(f"Days in response: {len(data['results'])}")
 
     scheduler = BackgroundScheduler()
+
     scheduler.add_job(
         display, "interval", seconds=1, args=["every 1 sec"]
     )  # change to 1 min
+
     scheduler.add_job(
-        display,
+        sunrise_sunset.delete_cache_file,
         "cron",
         month=1,
         day=1,
         hour=0,
         minute=0,
         second=0,
-        args=["every year"],
     )
     scheduler.start()
 
