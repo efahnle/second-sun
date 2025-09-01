@@ -32,8 +32,9 @@ def change_light_brightness(lamp: GPIO.PWM, days: dict) -> None:
         change_light_brightness.last_brightness = 0.0
     
     if abs(brightness - change_light_brightness.last_brightness) > 0.01:  # Only update if >0.01% difference
-        log(f"PWM: Changing brightness from {change_light_brightness.last_brightness:.2f}% to {brightness:.2f}%")
-        lamp.ChangeDutyCycle(brightness)
-        change_light_brightness.last_brightness = brightness
+        rounded_brightness = round(brightness, 2)
+        log(f"PWM: Changing brightness from {change_light_brightness.last_brightness:.2f}% to {rounded_brightness:.2f}%")
+        lamp.ChangeDutyCycle(rounded_brightness)
+        change_light_brightness.last_brightness = rounded_brightness
     
     current_brightness = brightness
