@@ -2,14 +2,17 @@ from datetime import datetime
 from utils import log
 import math
 
+
 def get_info_for_specific_day(date_to_lookup: str, days: list):
     for day in days:
         if day.get("date") == date_to_lookup:
             return day
     return None
 
-def days_since_summer_solstice(date: datetime)-> int:
-    return (date - datetime(date.year,12,21)).days % 365
+
+def days_since_summer_solstice(date: datetime) -> int:
+    return (date - datetime(date.year, 12, 21)).days % 365
+
 
 def light_progress_for_the_day(t: float) -> float:
     # Sun goes up and down. From 0% at sunrise to 100% at midday and back to 0% at sunset
@@ -55,4 +58,9 @@ def get_light_to_use(sunrise_sunset: dict) -> float:
     t = minutes_of_light_til_now / total_minutes_of_light
     d = days_since_summer_solstice(now)
 
-    return light_progress_for_the_day(t) * absolute_light_for_day_in_year(d)
+    brightness = light_progress_for_the_day(t) * absolute_light_for_day_in_year(d)
+
+    log(f"t: {t}, d: {d}, total_minutes_of_light: {total_minutes_of_light}, minutes_of_light_til_now: {minutes_of_light_til_now}")
+    log(f"Brightness: {brightness*100:.2f}%")
+    
+    return brightness * 100
