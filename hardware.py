@@ -8,9 +8,9 @@ def init_gpio(gpio_pin: int) -> GPIO.PWM:
     GPIO.setwarnings(False)
     GPIO.setup(gpio_pin, GPIO.OUT)
     # Try a higher frequency to reduce flicker
-    light_gpio = GPIO.PWM(gpio_pin, 1000)  # 1kHz instead of 100Hz
+    light_gpio = GPIO.PWM(gpio_pin, 600)
     light_gpio.start(0)
-    log(f"PWM initialized on pin {gpio_pin} at 1000Hz")
+    log(f"PWM initialized on pin {gpio_pin} at 600Hz")
 
     return light_gpio
 
