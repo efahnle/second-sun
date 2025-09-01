@@ -25,7 +25,6 @@ def absolute_light_for_day_in_year(d: int) -> float:
 
 
 def get_light_to_use(sunrise_sunset: dict) -> float:
-    # today=datetime.today().strftime('%Y-%m-%d')
     now = datetime.now()
     today = now.strftime("%Y-%m-%d")
     days = sunrise_sunset["results"]
