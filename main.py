@@ -51,10 +51,11 @@ def main():
         scheduler.start()
     except KeyboardInterrupt:
         log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
-        # light.ChangeDutyCycle(0)
-        log("Cleaning up GPIO")
         if is_raspberry_pi():
-            cleanup()
+            pi, gpio_pin = light
+            pi.hardware_PWM(gpio_pin, 1000, 0)  # Turn off light
+            log("Cleaning up GPIO")
+            cleanup(pi)
         log("Shutting down scheduler")
         scheduler.shutdown(wait=False)
         log("Exit successfully")
