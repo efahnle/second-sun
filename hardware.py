@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+from light_to_use import get_light_to_use
 
 
 def init_gpio(gpio_pin: int) -> GPIO.PWM:
@@ -13,3 +14,8 @@ def init_gpio(gpio_pin: int) -> GPIO.PWM:
 def cleanup() -> None:
     GPIO.cleanup()
     print("GPIO cleaned up.")
+
+
+def change_light_brightness(lamp: GPIO.PWM, days: dict) -> None:
+    brightness = get_light_to_use(days)
+    lamp.ChangeDutyCycle(brightness)

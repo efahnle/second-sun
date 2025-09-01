@@ -1,4 +1,5 @@
 from datetime import datetime
+from utils import log
 import math
 
 def get_info_for_specific_day(date_to_lookup: str, days: list):
@@ -26,6 +27,7 @@ def absolute_light_for_day_in_year(d: int) -> float:
 
 def get_light_to_use(sunrise_sunset: dict) -> float:
     now = datetime.now()
+    log(now.strftime("%Y-%m-%d %H:%M:%S"))
     today = now.strftime("%Y-%m-%d")
     days = sunrise_sunset["results"]
 
@@ -43,6 +45,7 @@ def get_light_to_use(sunrise_sunset: dict) -> float:
     sunset_datetime = datetime.strptime(today + " " + sunset, "%Y-%m-%d %I:%M:%S %p")
 
     if sunrise_datetime > now or sunset_datetime < now:
+        log("Now is outside of sunrise/sunset range")
         return 0.0
 
     total_minutes_of_light = (sunset_datetime - sunrise_datetime).total_seconds() / 60
