@@ -1,13 +1,9 @@
-# from hardware import init_gpio, cleanup
 from config import load_config
 from sunrisesunset import SunriseSunsetWrapper
-from utils import log
-from apscheduler.schedulers.background import BackgroundScheduler
+from utils import log, is_raspberry_pi
+from light_to_use import get_light_to_use
+from apscheduler.schedulers.blocking import BlockingScheduler
 import time
-
-
-def display(msg):
-    log(msg)
 
 
 def main():
@@ -22,11 +18,16 @@ def main():
     data = sunrise_sunset.get_sunrise_sunset()
     log(f"Days in response: {len(data['results'])}")
 
-    scheduler = BackgroundScheduler()
+    scheduler = BlockingScheduler()
 
-    scheduler.add_job(
-        display, "interval", seconds=1, args=["every 1 sec"]
-    )  # change to 1 min
+    if is_raspberry_pi():
+        log("Running on Raspberry Pi")
+        from hardware import init_gpio, cleanup, change_light_brightness
+        light = init_gpio(config.get("gpio_pin", 16))
+        scheduler.add_job(change_light_brightness, "interval", minutes=1, args=[light, data])
+    else:
+        log("Not running on Raspberry Pi")
+        scheduler.add_job(get_light_to_use, "interval", minutes=1, args=[data])
 
     scheduler.add_job(
         sunrise_sunset.delete_cache_file,
@@ -37,20 +38,17 @@ def main():
         minute=0,
         second=0,
     )
-    scheduler.start()
-
-    while True:
-        try:
-            time.sleep(10)
-        except KeyboardInterrupt as e:
-            log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
-            # light.ChangeDutyCycle(0)
-            log("Cleaning up GPIO")
-            # cleanup()
-            log("Shutting down scheduler")
-            scheduler.shutdown(wait=False)
-            log("Exit successfully")
-            raise e
+    try:
+        scheduler.start()
+    except KeyboardInterrupt:
+        log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
+        # light.ChangeDutyCycle(0)
+        log("Cleaning up GPIO")
+        if is_raspberry_pi():
+            cleanup()
+        log("Shutting down scheduler")
+        scheduler.shutdown(wait=False)
+        log("Exit successfully")
 
 
 """
