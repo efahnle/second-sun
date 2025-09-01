@@ -5,8 +5,8 @@ Wants=network.target
 
 [Service]
 Type=simple
-User=admin
-Group=admin
+User=root
+Group=root
 WorkingDirectory=/home/admin/second-sun
 ExecStartPre=/usr/bin/pigpiod
 ExecStart=/usr/bin/python3 /home/admin/second-sun/main.py
