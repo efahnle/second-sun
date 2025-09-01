@@ -19,6 +19,4 @@ def cleanup() -> None:
 
 def change_light_brightness(lamp: GPIO.PWM, days: dict) -> None:
     brightness = get_light_to_use(days)
-    if not hasattr(change_light_brightness, 'last_brightness') or change_light_brightness.last_brightness != brightness:
-        lamp.ChangeDutyCycle(brightness)
-        change_light_brightness.last_brightness = brightness
+    lamp.ChangeDutyCycle(brightness)

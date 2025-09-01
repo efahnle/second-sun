@@ -42,8 +42,8 @@ def main():
 
     while True:
         try:
-            time.sleep(10)
-            log("Main loop")
+            time.sleep(60)
+            #log("Main loop")
         except KeyboardInterrupt as e:
             log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
             # light.ChangeDutyCycle(0)
