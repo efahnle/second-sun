@@ -3,5 +3,6 @@
     "longitude": -58.38156,
     "api_url": "https://api.sunrisesunset.io/json",
     "data_file_name": "data_cache/sunrise_sunset.json",
-    "gpio_pin": 16
+    "gpio_pin": 12,
+    "prometheus_port": 8000
 }
