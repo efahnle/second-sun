@@ -2,6 +2,7 @@ import requests
 import json
 from pathlib import Path
 from datetime import date, datetime
+from utils import log
 
 
 class SunriseSunsetWrapper:
@@ -16,13 +17,20 @@ class SunriseSunsetWrapper:
 
     def get_sunrise_sunset(self) -> dict:
         if self._cache_exists():
-            print("Using cached data.")
+            log("Using cached data.")
             return self._get_info_from_from_cache()
 
-        print("Fetching new data from API.")
+        log("Fetching new data from API.")
         data = self._fetch_sunrise_sunset()
         self._save_to_cache(data)
         return data
+
+    def delete_cache_file(self):
+        if self._cache_exists():
+            Path(self.data_file_name).unlink()
+            log(f"Deleted cache file: {self.data_file_name}")
+        else:
+            log("No cache file to delete.")
 
     def _fetch_sunrise_sunset(self):
         current_year = datetime.now().year
@@ -35,7 +43,7 @@ class SunriseSunsetWrapper:
             "date_start": first_day_of_year,
             "date_end": last_day_of_year,
         }
-        
+
         response = requests.get(self.api_url, params=params)
         response.raise_for_status()
         return response.json()
@@ -47,7 +55,7 @@ class SunriseSunsetWrapper:
         with open(self.data_file_name, "r") as file:
             return json.load(file)
 
-    def _save_to_cache(self, data: dict) -> None:
+    def _save_to_cache(self, data: dict):
         Path(self.data_file_name).parent.mkdir(parents=True, exist_ok=True)
         with open(self.data_file_name, "w") as file:
             json.dump(data, file, indent=2)
