@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from light_to_use import get_light_to_use
+from utils import log
 
 
 def init_gpio(gpio_pin: int) -> GPIO.PWM:
@@ -23,5 +24,14 @@ current_brightness = 0.0
 def change_light_brightness(lamp: GPIO.PWM, days: dict) -> None:
     global current_brightness
     brightness = get_light_to_use(days)
-    lamp.ChangeDutyCycle(brightness)
+    
+    # Only change if different from last brightness
+    if not hasattr(change_light_brightness, 'last_brightness'):
+        change_light_brightness.last_brightness = 0.0
+    
+    if abs(brightness - change_light_brightness.last_brightness) > 0.01:  # Only update if >0.01% difference
+        log(f"PWM: Changing brightness from {change_light_brightness.last_brightness:.2f}% to {brightness:.2f}%")
+        lamp.ChangeDutyCycle(brightness)
+        change_light_brightness.last_brightness = brightness
+    
     current_brightness = brightness
