@@ -1,0 +1,26 @@
+[Unit]
+Description=Second Sun - Sunrise/Sunset Light Controller
+After=network.target pigpio.service
+Requires=pigpio.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=admin
+Group=admin
+WorkingDirectory=/home/admin/second-sun
+ExecStart=/usr/bin/python3 /home/admin/second-sun/main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment variables
+Environment=PYTHONPATH=/home/admin/second-sun
+
+# Ensure pigpio service is available
+After=pigpio.service
+Requires=pigpio.service
+
+[Install]
+WantedBy=multi-user.target

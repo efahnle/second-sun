@@ -1,23 +1,32 @@
 from config import load_config
 from sunrisesunset import SunriseSunsetWrapper
-from utils import log, is_raspberry_pi
+from utils import log, is_raspberry_pi, set_verbose
 from light_to_use import get_light_to_use
 from apscheduler.schedulers.blocking import BlockingScheduler
 from prometheus_exporter import PrometheusExporter
-import time
+import argparse
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Second Sun - Sunrise/Sunset Light Controller"
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose logging"
+    )
+    args = parser.parse_args()
+
+    set_verbose(args.verbose)
     config = load_config()
     if config:
-        log(f"Configuration loaded successfully: {config}")
+        log(f"Configuration loaded successfully: {config}", "DEBUG")
     else:
         log("Failed to load configuration.")
         exit(1)
 
     sunrise_sunset = SunriseSunsetWrapper(config)
     data = sunrise_sunset.get_sunrise_sunset()
-    log(f"Days in response: {len(data['results'])}")
+    log(f"Days in response: {len(data['results'])}", "DEBUG")
 
     # Start Prometheus exporter
     prometheus_port = config.get("prometheus_port", 8000)
@@ -32,10 +41,13 @@ def main():
     if is_raspberry_pi():
         log("Running on Raspberry Pi")
         from hardware import init_gpio, cleanup, change_light_brightness
-        light = init_gpio(config.get("gpio_pin", 16))
-        scheduler.add_job(change_light_brightness, "interval", minutes=1, args=[light, data])
+
+        light = init_gpio(config.get("gpio_pin", 12))
+        scheduler.add_job(
+            change_light_brightness, "interval", minutes=1, args=[light, data]
+        )
     else:
-        log("Not running on Raspberry Pi")
+        log("Not running on Raspberry Pi", "DEBUG")
         scheduler.add_job(get_light_to_use, "interval", minutes=1, args=[data])
 
     scheduler.add_job(
@@ -60,11 +72,6 @@ def main():
         scheduler.shutdown(wait=False)
         log("Exit successfully")
 
-
-"""
-    light = init_gpio(config.get("gpio_pin", 16))
-    light.ChangeDutyCycle(i)
-"""
 
 if __name__ == "__main__":
     main()

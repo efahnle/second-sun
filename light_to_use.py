@@ -60,7 +60,10 @@ def get_light_to_use(sunrise_sunset: dict) -> float:
 
     brightness = light_progress_for_the_day(t) * absolute_light_for_day_in_year(d)
 
-    log(f"t: {t}, d: {d}, total_minutes_of_light: {total_minutes_of_light}, minutes_of_light_til_now: {minutes_of_light_til_now}")
-    log(f"Brightness: {brightness*100:.2f}%")
-    
+    log(
+        f"t: {t}, d: {d}, total_minutes_of_light: {total_minutes_of_light}, minutes_of_light_til_now: {minutes_of_light_til_now}",
+        "DEBUG",
+    )
+    log(f"Brightness: {brightness*100:.2f}%", "DEBUG")
+
     return brightness * 100
