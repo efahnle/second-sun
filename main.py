@@ -3,6 +3,7 @@ from sunrisesunset import SunriseSunsetWrapper
 from utils import log, is_raspberry_pi
 from light_to_use import get_light_to_use
 from apscheduler.schedulers.blocking import BlockingScheduler
+from prometheus_exporter import PrometheusExporter
 import time
 
 
@@ -17,6 +18,14 @@ def main():
     sunrise_sunset = SunriseSunsetWrapper(config)
     data = sunrise_sunset.get_sunrise_sunset()
     log(f"Days in response: {len(data['results'])}")
+
+    # Start Prometheus exporter
+    prometheus_port = config.get("prometheus_port", 8000)
+    exporter = PrometheusExporter(port=prometheus_port)
+    exporter.start_server()
+    exporter.data = data
+    exporter.run_metrics_updater()
+    log(f"Prometheus metrics server started on port {prometheus_port}")
 
     scheduler = BlockingScheduler()
 

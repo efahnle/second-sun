@@ -17,6 +17,11 @@ def cleanup() -> None:
     print("GPIO cleaned up.")
 
 
+# Global variable to share brightness with prometheus exporter
+current_brightness = 0.0
+
 def change_light_brightness(lamp: GPIO.PWM, days: dict) -> None:
+    global current_brightness
     brightness = get_light_to_use(days)
     lamp.ChangeDutyCycle(brightness)
+    current_brightness = brightness
