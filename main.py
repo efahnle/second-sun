@@ -2,7 +2,7 @@ from config import load_config
 from sunrisesunset import SunriseSunsetWrapper
 from utils import log, is_raspberry_pi
 from light_to_use import get_light_to_use
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 import time
 
 
@@ -18,7 +18,7 @@ def main():
     data = sunrise_sunset.get_sunrise_sunset()
     log(f"Days in response: {len(data['results'])}")
 
-    scheduler = BackgroundScheduler()
+    scheduler = BlockingScheduler()
 
     if is_raspberry_pi():
         log("Running on Raspberry Pi")
@@ -38,22 +38,17 @@ def main():
         minute=0,
         second=0,
     )
-    scheduler.start()
-
-    while True:
-        try:
-            time.sleep(60)
-            #log("Main loop")
-        except KeyboardInterrupt as e:
-            log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
-            # light.ChangeDutyCycle(0)
-            log("Cleaning up GPIO")
-            if is_raspberry_pi():
-                cleanup()
-            log("Shutting down scheduler")
-            scheduler.shutdown(wait=False)
-            log("Exit successfully")
-            raise e
+    try:
+        scheduler.start()
+    except KeyboardInterrupt:
+        log(f"Shutdown initiated by KeyboardInterrupt. Setting lamp to 0%")
+        # light.ChangeDutyCycle(0)
+        log("Cleaning up GPIO")
+        if is_raspberry_pi():
+            cleanup()
+        log("Shutting down scheduler")
+        scheduler.shutdown(wait=False)
+        log("Exit successfully")
 
 
 """
