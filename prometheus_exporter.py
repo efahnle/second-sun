@@ -65,21 +65,21 @@ class PrometheusExporter:
                 break
 
         if todays_info:
-            sunrise = todays_info.get("sunrise", "9:00:00 AM")
-            sunset = todays_info.get("sunset", "6:00:00 PM")
+            dawn = todays_info.get("dawn", "6:00:00 AM")
+            dusk = todays_info.get("dusk", "7:00:00 PM")
 
-            sunrise_datetime = datetime.strptime(
-                today + " " + sunrise, "%Y-%m-%d %I:%M:%S %p"
+            dawn_datetime = datetime.strptime(
+                today + " " + dawn, "%Y-%m-%d %I:%M:%S %p"
             )
-            sunset_datetime = datetime.strptime(
-                today + " " + sunset, "%Y-%m-%d %I:%M:%S %p"
+            dusk_datetime = datetime.strptime(
+                today + " " + dusk, "%Y-%m-%d %I:%M:%S %p"
             )
 
-            if sunrise_datetime <= now <= sunset_datetime:
+            if dawn_datetime <= now <= dusk_datetime:
                 total_minutes_of_light = (
-                    sunset_datetime - sunrise_datetime
+                    dusk_datetime - dawn_datetime
                 ).total_seconds() / 60
-                minutes_of_light_til_now = (now - sunrise_datetime).total_seconds() / 60
+                minutes_of_light_til_now = (now - dawn_datetime).total_seconds() / 60
                 t = minutes_of_light_til_now / total_minutes_of_light
             else:
                 t = 0.0

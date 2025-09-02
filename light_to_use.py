@@ -30,30 +30,30 @@ def absolute_light_for_day_in_year(d: int) -> float:
 
 def get_light_to_use(sunrise_sunset: dict) -> float:
     now = datetime.now()
-    log(now.strftime("%Y-%m-%d %H:%M:%S"))
+    log(now.strftime("%Y-%m-%d %H:%M:%S"), "DEBUG")
     today = now.strftime("%Y-%m-%d")
     days = sunrise_sunset["results"]
 
     todays_info = get_info_for_specific_day(today, days)
 
     if todays_info:
-        sunrise = todays_info.get("sunrise")
-        sunset = todays_info.get("sunset")
+        dawn = todays_info.get("dawn")
+        dusk = todays_info.get("dusk")
     else:
-        print(f"No data was found for {today}, using 9-18")
-        sunrise = "9:00:00 AM"
-        sunset = "6:00:00 PM"
+        print(f"No data was found for {today}, using default dawn/dusk")
+        dawn = "6:00:00 AM"
+        dusk = "7:00:00 PM"
 
-    sunrise_datetime = datetime.strptime(today + " " + sunrise, "%Y-%m-%d %I:%M:%S %p")
-    sunset_datetime = datetime.strptime(today + " " + sunset, "%Y-%m-%d %I:%M:%S %p")
+    dawn_datetime = datetime.strptime(today + " " + dawn, "%Y-%m-%d %I:%M:%S %p")
+    dusk_datetime = datetime.strptime(today + " " + dusk, "%Y-%m-%d %I:%M:%S %p")
 
-    if sunrise_datetime > now or sunset_datetime < now:
-        log("Now is outside of sunrise/sunset range")
+    if dawn_datetime > now or dusk_datetime < now:
+        log("Now is outside of dawn/dusk range", "DEBUG")
         return 0.0
 
-    total_minutes_of_light = (sunset_datetime - sunrise_datetime).total_seconds() / 60
+    total_minutes_of_light = (dusk_datetime - dawn_datetime).total_seconds() / 60
 
-    minutes_of_light_til_now = (now - sunrise_datetime).total_seconds() / 60
+    minutes_of_light_til_now = (now - dawn_datetime).total_seconds() / 60
 
     t = minutes_of_light_til_now / total_minutes_of_light
     d = days_since_summer_solstice(now)
