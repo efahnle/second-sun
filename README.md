@@ -28,6 +28,36 @@ Only specific GPIO pins support hardware PWM on Raspberry Pi:
 
 Configure your `gpio_pin` in `config.json` to use one of these pins.
 
+# Running as a System Service
+
+To run Second Sun automatically on boot as a systemd service:
+
+**Installation:**
+```bash
+# Install dependencies
+sudo pip3 install -r requirements.txt
+
+# Copy service file to systemd directory
+sudo cp second-sun.service /etc/systemd/system/
+
+# Reload systemd and enable the service
+sudo systemctl daemon-reload
+sudo systemctl enable second-sun.service
+
+# Start the service
+sudo systemctl start second-sun.service
+
+# Check service status
+sudo systemctl status second-sun.service
+
+# View logs
+sudo journalctl -u second-sun.service -f
+```
+
+**Command Line Options:**
+- `python3 main.py` - Run with minimal logging (production)
+- `python3 main.py -v` or `--verbose` - Run with detailed debug logging
+
 # Prometheus Metrics
 The application exposes Prometheus metrics for monitoring and visualization.
 

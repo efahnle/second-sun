@@ -1,0 +1,21 @@
+[Unit]
+Description=Second Sun - Sunrise/Sunset Light Controller
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/home/admin/second-sun
+ExecStartPre=/usr/bin/pigpiod
+ExecStart=/usr/bin/python3 /home/admin/second-sun/main.py
+ExecStopPost=/usr/bin/pkill pigpiod
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONPATH=/home/admin/second-sun
+
+[Install]
+WantedBy=multi-user.target
