@@ -71,5 +71,9 @@ The application exposes Prometheus metrics for monitoring and visualization.
 
 Access metrics at: `http://raspberry-pi-ip:8000/metrics`
 
+# Sample Grafana dashboard
+<img width="1568" height="772" alt="image" src="https://github.com/user-attachments/assets/3d996d0f-d5ff-425f-80dd-a9c71cceaf25" />
+
+
 # Sunrise / Sunset API
 The project uses the fantastic https://sunrisesunset.io/api/ API to gather the information of the times based on the location. However, to avoid problems with network requests, `second-sun` queries the API once and caches the response in a local JSON file. This file is re-generated once per year. 
