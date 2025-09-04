@@ -9,12 +9,13 @@ User=root
 Group=root
 WorkingDirectory=/home/admin/second-sun
 ExecStartPre=/usr/bin/pigpiod
-ExecStart=/usr/bin/python3 /home/admin/second-sun/main.py --verbose
+ExecStart=/usr/bin/python3 -u /home/admin/second-sun/main.py --verbose
 ExecStopPost=/usr/bin/pkill pigpiod
 Restart=always
 RestartSec=10
 StandardOutput=journal
 StandardError=journal
+SyslogIdentifier=second-sun
 Environment=PYTHONPATH=/home/admin/second-sun
 
 [Install]
