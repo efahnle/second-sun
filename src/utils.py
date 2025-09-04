@@ -22,5 +22,6 @@ def log(message: str, level: str = "INFO") -> None:
     print(f"[{timestamp}] {message}")
 
 
-def is_raspberry_pi():
+def is_raspberry_pi() -> bool:
+    # Dirty hack, not suitable for mac users
     return platform.machine() in ["armv7l", "aarch64", "arm64"]

@@ -1,5 +1,5 @@
 from datetime import datetime
-from utils import log
+from .utils import log
 import math
 
 

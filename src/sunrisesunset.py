@@ -2,7 +2,7 @@ import requests
 import json
 from pathlib import Path
 from datetime import date, datetime
-from utils import log
+from .utils import log
 
 
 class SunriseSunsetWrapper:
@@ -11,7 +11,7 @@ class SunriseSunsetWrapper:
         self.longitude = config.get("longitude")
         self.api_url = config.get("api_url", "https://api.sunrisesunset.io/json")
         self.data_file_name = config.get(
-            "data_file_name", "data_cache/sunrise_sunset.json"
+            "data_file_name", "data/data_cache/sunrise_sunset.json"
         )
         # self.gpio_pin = config.get("gpio_pin")
 

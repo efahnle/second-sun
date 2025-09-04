@@ -1,6 +1,6 @@
 import pigpio
-from light_to_use import get_light_to_use
-from utils import log
+from .light_to_use import get_light_to_use
+from .utils import log
 
 
 def init_gpio(gpio_pin: int) -> tuple:

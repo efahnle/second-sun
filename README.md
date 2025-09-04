@@ -38,7 +38,7 @@ To run Second Sun automatically on boot as a systemd service:
 sudo pip3 install -r requirements.txt
 
 # Copy service file to systemd directory
-sudo cp second-sun.service /etc/systemd/system/
+sudo cp examples/second-sun.service /etc/systemd/system/
 
 # Reload systemd and enable the service
 sudo systemctl daemon-reload
@@ -72,18 +72,18 @@ The application exposes Prometheus metrics for monitoring and visualization.
 Access metrics at: `http://raspberry-pi-ip:8000/metrics`
 
 # Docker Compose Setup (Optional)
-For monitoring setup with Prometheus and Grafana, sample configuration files are provided in the `resources/` directory:
+For monitoring setup with Prometheus and Grafana, sample configuration files are provided in the `examples/` directory:
 
-- `resources/compose.yaml` - Docker Compose setup for Prometheus + Grafana
-- `resources/prometheus/prometheus.yaml` - Prometheus configuration
-- `resources/grafana/grafana.yaml` - Grafana datasource configuration  
-- `resources/grafana/grafana-dashboard.json` - Pre-built dashboard for Second Sun metrics
+- `examples/compose.yaml` - Docker Compose setup for Prometheus + Grafana
+- `examples/prometheus/prometheus.yaml` - Prometheus configuration
+- `examples/grafana/grafana.yaml` - Grafana datasource configuration  
+- `examples/grafana/grafana-dashboard.json` - Pre-built dashboard for Second Sun metrics
 
 **Quick start:**
 ```bash
-cd resources/
-docker-compose up -d
-# Grafana: http://localhost:3000 (admin/imnotcommitingmypasslol)
+cd examples/
+docker compose up -d
+# Grafana: http://localhost:3000 (credentials are in the compose file)
 # Prometheus: http://localhost:9090
 ```
 
@@ -98,7 +98,7 @@ Configuration is managed through `config.json`:
   "latitude": -34.60368,
   "longitude": -58.38156, 
   "api_url": "https://api.sunrisesunset.io/json",
-  "data_file_name": "data_cache/sunrise_sunset.json",
+  "data_file_name": "data/data_cache/sunrise_sunset.json",
   "gpio_pin": 12,
   "prometheus_port": 8000
 }
