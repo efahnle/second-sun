@@ -1,5 +1,3 @@
-import time
-import board
 from .utils import log
 
 # Global variables for sensor readings
@@ -18,6 +16,7 @@ def init_dht_sensor(dht_config: dict):
         return False
     
     try:
+        import board
         import adafruit_dht
         
         sensor_type = dht_config.get("type", "DHT22").upper()
@@ -51,8 +50,8 @@ def init_dht_sensor(dht_config: dict):
         log(f"DHT sensor ({sensor_type}) initialized on pin {pin_number}", "DEBUG")
         return True
         
-    except ImportError:
-        log("DHT sensor libraries not available. Install with: pip3 install adafruit-circuitpython-dht")
+    except ImportError as e:
+        log(f"DHT sensor libraries not available: {e}. Install with: pip3 install adafruit-circuitpython-dht")
         return False
     except Exception as e:
         log(f"Failed to initialize DHT sensor: {e}")
