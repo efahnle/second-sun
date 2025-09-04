@@ -398,7 +398,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 21,
         "y": 8
@@ -664,6 +664,6 @@
   "timezone": "browser",
   "title": "Second sun",
   "uid": "aews9fvy16z28d",
-  "version": 12,
+  "version": 13,
   "weekStart": ""
 }
