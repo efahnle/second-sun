@@ -9,6 +9,7 @@ User=root
 Group=root
 WorkingDirectory=/home/admin/second-sun
 ExecStartPre=/usr/bin/pigpiod
+ExecStartPre=/bin/sleep 2
 ExecStart=/usr/bin/python3 -u /home/admin/second-sun/main.py --verbose
 ExecStopPost=/usr/bin/pkill pigpiod
 Restart=always
