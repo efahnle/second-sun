@@ -94,7 +94,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 24,
         "x": 0,
         "y": 0
@@ -207,10 +207,10 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 8
       },
       "id": 4,
       "options": {
@@ -269,10 +269,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 5,
         "x": 12,
-        "y": 9
+        "y": 8
       },
       "id": 3,
       "options": {
@@ -333,10 +333,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 4,
         "x": 17,
-        "y": 9
+        "y": 8
       },
       "id": 2,
       "options": {
@@ -398,10 +398,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 3,
         "x": 21,
-        "y": 9
+        "y": 8
       },
       "id": 5,
       "options": {
@@ -433,6 +433,220 @@
       ],
       "title": "Service Running",
       "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{__name__=\"second_sun_temperature_celsius\", instance=\"pi.casa:8000\", job=\"pi-second-sun\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Temperature"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "second_sun_temperature_celsius",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Temperature (°C)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{__name__=\"second_sun_humidity_percent\", instance=\"pi.casa:8000\", job=\"pi-second-sun\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Humidity"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "second_sun_humidity_percent",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Humidity",
+      "type": "timeseries"
     }
   ],
   "preload": false,
@@ -443,13 +657,13 @@
     "list": []
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Second sun",
   "uid": "aews9fvy16z28d",
-  "version": 9,
+  "version": 12,
   "weekStart": ""
 }
