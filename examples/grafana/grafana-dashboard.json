@@ -478,6 +478,8 @@
             }
           },
           "mappings": [],
+          "max": 45,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -585,6 +587,8 @@
             }
           },
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -664,6 +668,6 @@
   "timezone": "browser",
   "title": "Second sun",
   "uid": "aews9fvy16z28d",
-  "version": 13,
+  "version": 15,
   "weekStart": ""
 }
