@@ -1,10 +1,10 @@
 from prometheus_client import Gauge, start_http_server
-from light_to_use import (
+from .light_to_use import (
     light_progress_for_the_day,
     absolute_light_for_day_in_year,
     days_since_summer_solstice,
 )
-from utils import is_raspberry_pi
+from .utils import is_raspberry_pi
 from datetime import datetime
 import time
 import threading
@@ -40,11 +40,11 @@ class PrometheusExporter:
 
         # Get current brightness from shared variable or calculate if not on Pi
         if is_raspberry_pi():
-            from hardware import current_brightness
+            from .hardware import current_brightness
 
             brightness = current_brightness
         else:
-            from light_to_use import get_light_to_use
+            from .light_to_use import get_light_to_use
 
             brightness = get_light_to_use(sunrise_sunset_data)
 

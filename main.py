@@ -1,9 +1,9 @@
-from config import load_config
-from sunrisesunset import SunriseSunsetWrapper
-from utils import log, is_raspberry_pi, set_verbose
-from light_to_use import get_light_to_use
+from src.config import load_config
+from src.sunrisesunset import SunriseSunsetWrapper
+from src.utils import log, is_raspberry_pi, set_verbose
+from src.light_to_use import get_light_to_use
 from apscheduler.schedulers.blocking import BlockingScheduler
-from prometheus_exporter import PrometheusExporter
+from src.prometheus_exporter import PrometheusExporter
 import argparse
 
 
@@ -40,7 +40,7 @@ def main():
 
     if is_raspberry_pi():
         log("Running on Raspberry Pi")
-        from hardware import init_gpio, cleanup, change_light_brightness
+        from src.hardware import init_gpio, cleanup, change_light_brightness
 
         light = init_gpio(config.get("gpio_pin", 12))
         scheduler.add_job(
