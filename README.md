@@ -88,7 +88,8 @@ docker compose up -d
 ```
 
 # Sample Grafana dashboard
-<img width="1568" height="772" alt="image" src="https://github.com/user-attachments/assets/3d996d0f-d5ff-425f-80dd-a9c71cceaf25" />
+
+<img width="1563" height="873" alt="image" src="https://github.com/user-attachments/assets/84d37cca-2e51-41ef-b94b-af4bffd2bf42" />
 
 # Configuration
 Configuration is managed through `config.json`:
