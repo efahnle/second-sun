@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=imnotcommitingmypasslol
+      - GF_SECURITY_ADMIN_PASSWORD=changeme
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
 volumes:
