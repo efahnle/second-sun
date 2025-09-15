@@ -23,6 +23,12 @@ absolute_light_year = Gauge(
     "second_sun_absolute_light_year",
     "Absolute light value for the current day of year (0.7-1.0)",
 )
+temperature_celsius = Gauge(
+    "second_sun_temperature_celsius", "Current temperature in Celsius"
+)
+humidity_percent = Gauge(
+    "second_sun_humidity_percent", "Current humidity percentage"
+)
 
 
 class PrometheusExporter:
@@ -91,6 +97,19 @@ class PrometheusExporter:
         # Calculate and update absolute light for day in year
         d = days_since_summer_solstice(now)
         absolute_light_year.set(absolute_light_for_day_in_year(d))
+        
+        # Update temperature and humidity if DHT sensor is available
+        if is_raspberry_pi():
+            try:
+                from .dht_sensor import get_current_readings, is_sensor_enabled
+                if is_sensor_enabled():
+                    temp, humidity = get_current_readings()
+                    if temp is not None:
+                        temperature_celsius.set(temp)
+                    if humidity is not None:
+                        humidity_percent.set(humidity)
+            except ImportError:
+                pass  # DHT sensor not available
 
     def run_metrics_updater(self):
         """Run metrics updater in a separate thread"""
